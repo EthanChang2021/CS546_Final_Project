@@ -50,7 +50,24 @@ const checkUser = async (username, password) => {
     }
 };
 
+const favoriteOfUser = async(id,favoriteGarage) => {
+    try{
+    let favorites_ = await getFavorites(id);
+    favorites_ = favorites_.push(favoriteGarage);
+    await setFavorite(id,favorites_);
+    }catch(e){
+        console.log(`Favorite Error:${e}`);
+    }
+}
+const getFavorites = async(id) =>{
+
+}
+
+const setFavorite = async(id,favorite_) =>{
+    
+}
 module.exports = {
     createUser,
-    checkUser
+    checkUser,
+    favoriteOfUser
 };

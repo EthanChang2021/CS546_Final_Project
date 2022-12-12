@@ -7,7 +7,7 @@ app.use(express.json());
 
 app.use(
   session({
-    name: 'AwesomeWebApp',
+    name: 'CS546FinalProject',
     secret: "This is a secret.. shhh don't tell anyone",
     saveUninitialized: false,
     resave: false,
