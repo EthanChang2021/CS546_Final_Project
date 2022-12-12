@@ -59,12 +59,19 @@ const favoriteOfUser = async(id,favoriteGarage) => {
         console.log(`Favorite Error:${e}`);
     }
 }
-const getFavorites = async(id) =>{
+const getFavorites = async(id_) =>{
+    const userExist = await userCollection.findOne({ id: id_ });
+    if (!userExist) return { msg: "Either the username or password is invalid" }
+    return userExist.favorite
 
 }
 
-const setFavorite = async(id,favorite_) =>{
+const setFavorite = async(_id,favorite_) =>{
+    const userExist = await userCollection.findOne({ id: id_ });
+    if (!userExist) return { msg: "Either the username or password is invalid" }
     
+
+
 }
 module.exports = {
     createUser,
