@@ -1,16 +1,38 @@
 const express = require('express');
 const app = express();
-const static = express.static(__dirname + '/public');
-
+const session = require('express-session');
 const configRoutes = require('./routes');
-const exphbs = require('express-handlebars');
 
-app.use('/public', static);
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
 
-app.engine('handlebars', exphbs.engine({defaultLayout: 'main'}));
-app.set('view engine', 'handlebars');
+app.use(
+  session({
+    name: 'CS546FinalProject',
+    secret: "This is a secret.. shhh don't tell anyone",
+    saveUninitialized: false,
+    resave: false,
+    cookie: {maxAge: 60000}
+  })
+);
+
+app.use('/private', (req, res, next) => {
+  console.log(req.session.id);
+  if (!req.session.user) {
+    return res.redirect('/');
+  } else {
+    next();
+  }
+});
+
+app.use('/login', (req, res, next) => {
+  if (req.session.user) {
+    return res.redirect('/private');
+  } else {
+    //here I',m just manually setting the req.method to post since it's usually coming from a form
+    req.method = 'POST';
+    next();
+  }
+});
 
 configRoutes(app);
 
